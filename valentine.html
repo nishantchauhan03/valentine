@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .heart {
+            font-size: 80px;
+            animation: heartbeat 1.5s infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+        
+        h1 {
+            font-size: 48px;
+            color: #e91e63;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .question {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 18px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .yes-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+        
+        .yes-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+        }
+        
+        .no-btn {
+            background: #f0f0f0;
+            color: #666;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .no-btn:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        
+        .response {
+            display: none;
+            margin-top: 30px;
+            font-size: 32px;
+            color: #e91e63;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .celebration {
+            display: none;
+            font-size: 60px;
+            margin-top: 20px;
+        }
+        
+        .sad {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart">❤️</div>
+        <h1>Priya Singh,</h1>
+        <p class="question">Will you be my Valentine?</p>
+        
+        <div class="buttons" id="buttonContainer">
+            <button class="yes-btn" onclick="handleYes()">YES</button>
+            <button class="no-btn" onclick="handleNo()">NO</button>
+        </div>
+        
+        <div class="response" id="yesResponse">
+            I knew it! You're the best! 💕
+        </div>
+        
+        <div class="celebration" id="celebration">
+            🎉 💖 🥰 ✨ 💐 🎊
+        </div>
+        
+        <div class="sad" id="sadResponse">
+            Aww... but I'll keep trying! 🥺
+        </div>
+    </div>
+    
+    <script>
+        function handleYes() {
+            document.getElementById('buttonContainer').style.display = 'none';
+            document.getElementById('yesResponse').style.display = 'block';
+            document.getElementById('celebration').style.display = 'block';
+            document.querySelector('.question').style.display = 'none';
+            
+            // Create hearts falling animation
+            createHearts();
+        }
+        
+        function handleNo() {
+            // Make the NO button run away!
+            const noBtn = document.querySelector('.no-btn');
+            const maxX = window.innerWidth - noBtn.offsetWidth - 100;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 100;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            // Make YES button bigger
+            const yesBtn = document.querySelector('.yes-btn');
+            const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize + 2) + 'px';
+            yesBtn.style.padding = '20px 60px';
+        }
+        
+        function createHearts() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.top = '-50px';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    heart.style.animation = 'fall 3s linear';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.zIndex = '1000';
+                    
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 100);
+            }
+        }
+        
+        // Add fall animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fall {
+                to {
+                    top: 100vh;
+                    transform: translateX(${Math.random() * 200 - 100}px) rotate(${Math.random() * 360}deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
